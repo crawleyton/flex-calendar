@@ -1,6 +1,6 @@
 (function(){
   "use strict";
-  
+
   var app = angular
     .module('flexcalendar', ['pascalprecht.translate'])
     .directive('flexCalendar', flexCalendar);
@@ -8,7 +8,7 @@
   var defaultTranslation = angular
     .module('flexcalendar.defaultTranslation', ['flexcalendar'])
     .config(defaultTranslationConfig);
-    
+
   defaultTranslationConfig.$inject = ['$translateProvider'];
   function defaultTranslationConfig($translateProvider){
     $translateProvider.translations('en', {
@@ -16,7 +16,7 @@
       FEBRUARY: 'February',
       MARCH: 'March',
       APRIL: 'April',
-      MAI: 'Mai',
+      MAY: 'May',
       JUNE: 'June',
       JULY: 'July',
       AUGUST: 'August',
@@ -98,7 +98,7 @@
 
     var $translate = $filter('translate');
 
-    var MONTHS = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAI', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+    var MONTHS = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
     var WEEKDAYS = ['SUNDAY' , 'MONDAY' , 'TUESDAY' , 'WEDNESDAY' , 'THURSDAY' , 'FRIDAY' , 'SATURDAY'];
 
     if($scope.options.mondayIsFirstDay)
@@ -197,7 +197,7 @@
       if (date.event.length && $scope.options.eventClick) {
         $scope.options.eventClick(date, domEvent);
       }
-      
+
       $scope.options.dateClick(date, domEvent);
     }
 
@@ -345,27 +345,36 @@
 
     function prevMonth() {
       if (!$scope.allowedPrevMonth()) { return; }
-      var currIndex = MONTHS.indexOf($scope.selectedMonth);
+      var index,
+          currIndex = MONTHS.indexOf($scope.selectedMonth);
+      // January
       if (currIndex === 0) {
         $scope.selectedYear -= 1;
-        $scope.selectedMonth = MONTHS[11];
+        index = 11;
       } else {
-        $scope.selectedMonth = MONTHS[currIndex - 1];
+        index = currIndex - 1;
       }
-      var month = {name: $scope.selectedMonth, index: currIndex - 1, _index: currIndex+2 };
+
+      $scope.selectedMonth = MONTHS[index];
+
+      var month = {name: $scope.selectedMonth, index: index, _index: currIndex + 2 };
       $scope.options.changeMonth(month, $scope.selectedYear);
     }
 
     function nextMonth() {
       if (!$scope.allowedNextMonth()) { return; }
-      var currIndex = MONTHS.indexOf($scope.selectedMonth);
+      var index,
+          currIndex = MONTHS.indexOf($scope.selectedMonth);
+      // December
       if (currIndex === 11) {
         $scope.selectedYear += 1;
-        $scope.selectedMonth = MONTHS[0];
+        index = 0;
       } else {
-        $scope.selectedMonth = MONTHS[currIndex + 1];
+        index = currIndex + 1;
       }
-      var month = {name: $scope.selectedMonth, index: currIndex + 1, _index: currIndex+2 };
+
+      $scope.selectedMonth = MONTHS[index];
+      var month = {name: $scope.selectedMonth, index: index, _index: currIndex + 2 };
       $scope.options.changeMonth(month, $scope.selectedYear);
     }
 
