@@ -1,6 +1,6 @@
 {
   "name": "flex-calendar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An Elegant Calendar Built With Angular.js",
   "main": "index.js",
   "scripts": {
